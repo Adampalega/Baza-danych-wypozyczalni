@@ -30,4 +30,8 @@ Schemat:
 
 ![](README_JPG/schemat3.jpg)
 
+TESTY:
+
+
+
 Utworzono przy pomocy Oracle Designer
