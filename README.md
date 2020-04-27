@@ -28,6 +28,6 @@ Do każdej tabeli oprócz dotyczących danych kontakowych do każdego klucza gł
 
 Schemat:
 
-![](schemat3.jpg)
+![](README_JPG/schemat3.jpg)
 
 Utworzono przy pomocy Oracle Designer
