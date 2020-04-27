@@ -31,6 +31,90 @@ Schemat:
 ![](README_JPG/schemat3.jpg)
 
 TESTY:
+zwraca informacje na temat rezerwacji z oddziału nr 1, takie jak id_rezerwacji, data odbioru, id_pakietu, id_samochodu, id pracownika
+
+```
+SELECT
+id_rezerwacja, rezerwacja.data_odbioru, rezerwacja.id_pakietu, rezerwacja.id_samochod, pracownicy.id_pracownika
+FROM rezerwacja inner join pracownicy on rezerwacja.id_pracownika = pracownicy.id_pracownika where pracownicy.id_odzial = 1
+```
+![](README_JPG/out1.png)
+
+
+Rezerwacje, których data obioru jak i zwrotu jest mniejsza od obecnej:
+
+```
+SELECT
+id_rezerwacja, rezerwacja.data_odbioru, rezerwacja.id_pakietu, rezerwacja.id_samochod
+FROM rezerwacja
+WHERE data_odbioru < (SELECT TO_CHAR(SYSDATE, 'DD-MON-YYYY') FROM dual) and data_wydania < (SELECT TO_CHAR(SYSDATE, 'DD-MON-YYYY') FROM dual);
+```
+![](README_JPG/out2.png)
+
+Klienci oraz pracownicy o tym samym adresie
+
+```
+SELECT
+klient.id_adresu, klient.id_klient, klient.imie imie_klienta, klient.nazwisko nazwisko_klienta,
+pracownicy.imie imie_pracownika,
+pracownicy.nazwisko nazwisko_pracownika
+FROM klient INNER JOIN pracownicy on pracownicy.id_adresu = klient.id_adresu;
+```
+![](README_JPG/out3.png)
+
+wyświetla cene za dzień dla segmentu o numerze rezerwacji id = 2:
+
+```
+SELECT CENA from samochod_segment where id_segment =
+(SELECT id_segment FROM markamodel WHERE id_marka_model =
+(SELECT id_marka_model
+FROM samochod where id_samochod =
+(SELECT id_samochod from rezerwacja where id_rezerwacja = 2)));
+```
+![](README_JPG/out4.png)
+
+Wyświetla nazwe oraz dodatkowy koszt związany wykupionym dodatkowym pakietem
+
+```
+SELECT nazwa_pakietu, dodatkowy_koszt FROM pakiety_dodatkowe where
+id_pakietu = (SELECT id_pakietu from rezerwacja where rezerwacja.id_rezerwacja= 3);
+```
+![](README_JPG/out5.png)
+
+Samochody wraz z odzialami oraz dostepnoscia na podstawie rezerwacji
+```
+SELECT samochod.id_samochod, samochod.id_odzial, rezerwacja.data_odbioru, rezerwacja.data_wydania from samochod LEFT JOIN rezerwacja on samochod.id_samochod = rezerwacja.id_samochod ORDER BY samochod.id_samochod;
+```
+![](README_JPG/out6.png)
+
+id samochodow wraz z nazwa firmy leasingującej oraz data kupna data sprzedazy oraz rata jaką wypożyczalnia płaci za samochód
+```
+SELECT samochod.id_samochod, leasing.nazwa_firmy, leasing.data_kupna, leasing.data_sprzedazy, leasing.rata from samochod INNER JOIN leasing on samochod.id_leasing = leasing.id_leasing ORDER BY samochod.id_samochod;
+```
+![](README_JPG/out7.png)
+
+Samochody z danego odziału wraz z marką i modelem
+```
+SELECT markamodel.marka, markamodel.model from markamodel INNER JOIN (SELECT id_marka_model from samochod where id_odzial = 1) zz on markamodel.id_marka_model = zz.id_marka_model;
+```
+![](README_JPG/out8.png)
+
+Czynsze dla każdego oddziału
+```
+SELECT id_odzial, czynsz from oddzial;
+```
+![](README_JPG/out9.png)
+
+Wszyscy pracownicy wraz z dzialem i wynagrodzeniem
+
+```
+SELECT pracownicy.id_odzial, pracownicy.imie, pracownicy.nazwisko, stanowisko.nazwa_stanowiska, stanowisko.podstawa_wynagrodzenia, pracownicy.premia from pracownicy INNER JOIN stanowisko on stanowisko.id_stanowiska = pracownicy.id_stanowiska ORDER BY pracownicy.id_odzial;
+```
+
+
+
+
+
 
 
 
