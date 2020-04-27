@@ -26,3 +26,4 @@ PAKIETY_DODATKOWE - id_ pakietu jako klucz główny, nazwa pakietu oraz dodatkow
 REZERWACJA – przechowuje dane na temat konkretnej rezerwacji takie jak: data_wydania ora odbioru, lokalizacja miejsca wydania oraz odbioru oraz klucze obce do innych tabel przechowujących dane na temat rezerwacji. Jedna rezerwacja może mieć wyłącznie jeden samochód, może go obsługiwać tylko jeden pracownik, można wypożyczyć go jednemu klientowi klucz główny id_rezerwacja
 Do każdej tabeli oprócz dotyczących danych kontakowych do każdego klucza głównego jest dołączony trigger, który automatycznie zwiększa indeksy przy wstawianiu danych.
 
+![](schemat3.jpg)
